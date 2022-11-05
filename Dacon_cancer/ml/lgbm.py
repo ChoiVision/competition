@@ -1,3 +1,5 @@
+import pandas as pd
+import numpy as np
 import lightgbm
 from lightgbm import log_evaluation, early_stopping
 
@@ -16,22 +18,26 @@ target= train['N_category']
 features= train.drop(['N_category','kfold'], axis=1)
 
 
-def objective(trial: Trial):
+def objective(trial: Trial, is_log=False):
+    score_list= list()
+
+    if is_log:
+        classifier_list= list()
 
     params= {
     'objective': 'binary',
-    'boosting_type' : 'gbdt',
-    "n_estimators" : trial.suggest_int('n_estimators', 100, 2500),
-    'max_depth':trial.suggest_int('max_depth', 4, 128),
+    'boosting_type' : trial.suggest_categorical('boosting_type',['gbdt', 'rf', 'dart']),
+    "n_estimators" : trial.suggest_int('n_estimators', 100, 30000),
+    'max_depth':trial.suggest_int('max_depth', 4, 512),
     'seed': Config.SEED,
     'lambda_l1': trial.suggest_float('lambda_l1', 1e-8, 10.0),
     'lambda_l2': trial.suggest_float('lambda_l2', 1e-8, 10.0),
-    'num_leaves': trial.suggest_int('num_leaves', 4, 64),
+    'num_leaves': trial.suggest_int('num_leaves', 4, 512),
     'max_leaf_nodes': trial.suggest_int('max_leaf_nodes', 4, 512),
     'feature_fraction': trial.suggest_float('feature_fraction', 0.5, 1.0),
     'bagging_fraction': trial.suggest_float('bagging_fraction', 0.8, 1.0),
-    'bagging_freq': trial.suggest_int('bagging_freq', 1, 12),
-    'min_child_samples': trial.suggest_int('min_child_samples', 4, 128),
+    'bagging_freq': trial.suggest_int('bagging_freq', 4, 512),
+    'min_child_samples': trial.suggest_int('min_child_samples', 4, 512),
     'learning_rate': trial.suggest_float('learning_rate', 6e-9, 1e-2),
     'n_jobs': -1,
     }
@@ -60,25 +66,20 @@ def objective(trial: Trial):
         eval_metric='binary_logloss', 
         callbacks= callbacks)
 
-        log= model.predict_proba(test, num_iteration= model.best_iteration_)
-        pred= model.predict(test)
+        best_loss= model.best_score_['valid_0']['binary_logloss']
+        score_list.append(best_loss)
+    
+    loss_mean= np.mean(score_list)
 
-#         pred= model.predict(X_valid, num_iteration= model.best_iteration_)
-#         print()
-#         print("PRED")
-#         print(pred)
-#         print()
+    return loss_mean
+
+
 
 sampler= TPESampler(seed=Config.SEED)
 study= optuna.create_study(direction='minimize', sampler= sampler)
-study.optimize(objective, n_trials=3)
+study.optimize(objective, n_trials=100)
 print('##############################################')
 print('Number of finished trials:', len(study.trials))
 print("Best Score: ", study.best_value)
 print('Best trial: ', study.best_trial.params)
 print('##############################################')
-
-
-
-
-# print(objective(trail))
