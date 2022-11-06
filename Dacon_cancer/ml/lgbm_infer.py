@@ -47,6 +47,7 @@ for k in range(Config.FOLDS):
 
 np_= np.array(pred_proba)
 sum_= np.sum(np_, axis=0)
+np.save('ml_logs/pred_proba.npy', sum_)
 res= np.argmax(sum_, 1)
 sub= pd.read_csv(Config.SUB_CSV)
 sub['N_category']= res
