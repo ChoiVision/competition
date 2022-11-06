@@ -1,9 +1,11 @@
-Number of finished trials: 100
+FOLDS= 7
+STOP= 1000
 Best Score:  0.3923630801691212
 Best trial:  {'boosting_type': 'gbdt', 'n_estimators': 11879, 'max_depth': 95, 'lambda_l1': 2.764730777954449, 'lambda_l2': 0.0967668048636997, 'num_leaves': 35, 'max_leaf_nodes': 71, 'feature_fraction': 0.8257218465477406, 'bagging_fraction': 0.8236838683309422, 'bagging_freq': 138, 'min_child_samples': 16, 'learning_rate': 0.004176695065440278}
 
 
-Number of finished trials: 500
+FOLDS= 7
+STOP= 1000
 Best Score:  0.3893057322960721
 Best trial:  {'n_estimators': 4008, 'max_depth': 352, 'lambda_l1': 3.053345198992793, 'lambda_l2': 5.699878131556061, 'num_leaves': 383, 'max_leaf_nodes': 98, 'feature_fraction': 0.9998269180212589, 'bagging_fraction': 0.7911027185332159, 'bagging_freq': 93, 'min_child_samples': 29, 'learning_rate': 0.007424496866670218}
 
