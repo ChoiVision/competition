@@ -29,9 +29,9 @@ def concat_df(train, test):
     return apps
 
 def split_train_test(apps):
-    train= apps[apps['N_category'] != None]
-    test= apps[apps['N_category'] == None]
+    train= apps[~apps['N_category'].isnull()]
 
-    test.drop('N_category', axis=1, inplace= True)
+    test= apps[apps['N_category'].isnull()]
+    test.drop('N_category', axis=1)
 
     return train, test
