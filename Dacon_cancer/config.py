@@ -1,7 +1,8 @@
 class Config:
-    TRAIN_CSV= 'train.csv'
-    TEST_CSV= 'test.csv'
+    TRAIN_CSV= 'train_eda.csv'
+    TEST_CSV= 'test_eda.csv'
     INFO= 'clinical_info.xlsx'
-    FOLDS= 10
+    SUB_CSV= 'sample_submission.csv'
+    FOLDS= 15
     SEED= 42
-    STOP= 300
+    STOP= 3000

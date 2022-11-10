@@ -4,13 +4,15 @@ from sklearn.model_selection import StratifiedKFold
 def preprocess_csv(path, mode='train'):
     df= pd.read_csv(path)
     if mode == 'train':
-        drop_cols= ['ID', 'img_path', 'mask_path', '수술연월일']
+        # drop_cols= ['ID', 'img_path', 'mask_path', '수술연월일']
+        drop_cols= ['수술연월일']
         df.drop(drop_cols, axis=1, inplace= True)
     
         return df
 
     if mode == 'test':
-        drop_cols= ['ID', 'img_path', '수술연월일']
+        # drop_cols= ['ID', 'img_path', '수술연월일']
+        drop_cols= ['수술연월일']
         df.drop(drop_cols, axis=1, inplace= True)
 
         return df
