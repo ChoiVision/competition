@@ -6,7 +6,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+data/test_imgs/*
+data/train_imgs/*
+data/train_masks/*
 # C extensions
 *.so
 

@@ -5,8 +5,8 @@ import numpy as np
 
 import lightgbm
 from lightgbm import log_evaluation, early_stopping
-from config import Config
-from ml_utils.ml_util import preprocess_csv, create_skf
+from ml_config import Config
+from ml.ml_utils.ml_util import preprocess_csv, create_skf
 
 params=  {'boosting_type': 'gbdt', 'n_estimators': 26957, 'max_depth': 419, 'lambda_l1': 1.6974613995767849, 'lambda_l2': 0.4149418457171429, 'num_leaves': 441, 'max_leaf_nodes': 512, 'feature_fraction': 0.9469753495344944, 'bagging_fraction': 0.9332038023799318, 'bagging_freq': 172, 'min_child_samples': 22, 'learning_rate': 0.0038080912971612617}
 # test= preprocess_csv(Config.TEST_CSV, 'test')
